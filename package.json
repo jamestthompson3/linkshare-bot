@@ -1,0 +1,17 @@
+{
+  "name": "link-share-bot",
+  "version": "0.0.1",
+  "description": "link share bot for telegram",
+  "main": "index.js",
+  "author": "taylor_thompson",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "dotenv": "^8.0.0",
+    "micro": "^9.3.4"
+  }
+}
