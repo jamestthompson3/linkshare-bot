@@ -9,8 +9,15 @@ const TELEGRAM_URL = `https://api.telegram.org/bot${
 module.exports = async (req, res) => {
   const body = await json(req);
   const { message } = body;
-  console.log(body);
   const urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+
+  if (message.entities) {
+    console.log(message.entities);
+    const command = message.entities.find(
+      entity => entity.type === "bot_command"
+    );
+    console.log(command);
+  }
 
   if (!message || !urlRegex.test(message.text)) {
     return res.end();
