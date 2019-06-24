@@ -33,7 +33,9 @@ module.exports = async (req, res) => {
     }
   }
 
-  if (!urlRegex.test(message.text)) {
+  const [url, description] = message.text.split("\n");
+
+  if (!urlRegex.test(url)) {
     return res.end();
   }
 
