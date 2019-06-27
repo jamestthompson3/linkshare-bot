@@ -6,14 +6,11 @@ const TELEGRAM_URL = `https://api.telegram.org/bot${
   process.env.TELEGRAM_KEY
 }/sendMessage`;
 
-function postToBot(res, chatId, text) {
+function postToBot(res, data) {
   axios
-    .post(TELEGRAM_URL, {
-      chat_id: chatId,
-      text
-    })
+    .post(TELEGRAM_URL, data)
     .then(() => res.end("ok"))
-    .catch(err => res.end(`Error: ${err}`));
+    .catch(err => res.end(`Error in Sending to Telegram: ${err}`));
 }
 
 module.exports = async (req, res) => {
@@ -29,7 +26,12 @@ module.exports = async (req, res) => {
       entity => entity.type === "bot_command"
     );
     if (command && message.text.includes("/id")) {
-      return postToBot(res, message.chat.id, message.chat.id);
+      const data = {
+        chat_id: message.chat.id,
+        text: message.chat.id
+      };
+
+      return postToBot(res, data);
     }
   }
 
@@ -39,5 +41,9 @@ module.exports = async (req, res) => {
     return res.end();
   }
 
-  postToBot(res, message.chat.id, message.text);
+  const data = {
+    chat_id: message.chat.id,
+    text: message.text
+  };
+  postToBot(res, data);
 };
